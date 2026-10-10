@@ -1,0 +1,282 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#effaff">
+<title>AI Essay Improver - Free Tools Zone</title>
+<meta name="description" content="Improve essay grammar, clarity, sentence structure and academic writing with the free AI Essay Improver.">
+<style>
+:root {
+  --blue:#1687e8;
+  --green:#19a875;
+  --ink:#18344b;
+  --muted:#607587;
+  --border:#dceaf1;
+  --panel:#ffffff;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;font-family:Arial,Helvetica,sans-serif;
+  color:var(--ink);background:linear-gradient(135deg,#effaff,#effcf5);
+  line-height:1.6;
+}
+header{text-align:center;padding:32px 16px 20px}
+.logo{font-size:13px;font-weight:800;letter-spacing:2px;color:#1687e8}
+h1{font-size:clamp(28px,5vw,42px);line-height:1.15;margin:12px 0}
+.gradient{background:linear-gradient(90deg,#1687e8,#19a875);color:transparent;background-clip:text}
+header p{max-width:650px;margin:12px auto;color:var(--muted)}
+main{max-width:1000px;margin:0 auto;padding:12px 16px 38px}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:18px;padding:22px;margin:0 0 18px;box-shadow:0 8px 28px #164e6310}
+h2{font-size:20px;margin:0 0 14px}
+label{display:block;font-weight:700;font-size:14px;margin:13px 0 6px}
+textarea,select{
+  width:100%;padding:13px;border:1px solid #cbdde8;border-radius:11px;
+  background:#fff;color:var(--ink);font:inherit;font-size:15px;outline:none;
+}
+textarea{min-height:230px;resize:vertical}
+textarea:focus,select:focus{border-color:var(--blue);box-shadow:0 0 0 3px #1687e81b}
+.row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.tools{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+button{border:0;border-radius:10px;padding:12px 17px;font-size:14px;font-weight:700;cursor:pointer;min-height:44px}
+button:disabled{opacity:.6;cursor:not-allowed}
+.primary{background:linear-gradient(100deg,var(--blue),var(--green));color:white;flex:1}
+.secondary{background:#edf7ff;color:#1768a5;border:1px solid #d4eafa}
+.status{margin-top:14px;padding:12px;border-radius:10px;background:#f0f9ff;color:#27536c;display:none;overflow-wrap:anywhere}
+.status.error{background:#fff1f0;color:#a52d28}
+.status.success{background:#effcf5;color:#14734f}
+.small{font-size:13px;color:var(--muted)}
+.counter{text-align:right;font-size:12px;color:var(--muted);margin-top:4px}
+.result{white-space:pre-wrap;overflow-wrap:anywhere;min-height:150px;padding:15px;background:#f6fbfd;border:1px solid var(--border);border-radius:12px}
+.result:empty:before{content:"Your improved essay will appear here.";color:#8a9ba8}
+footer{text-align:center;color:var(--muted);font-size:13px;padding:10px 16px 30px}
+@media(max-width:600px){
+ .row{grid-template-columns:1fr}
+ .card{padding:16px}
+ .tools button{width:100%}
+ header{padding-top:24px}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">FREE TOOLS ZONE</div>
+  <h1>AI Essay <span class="gradient">Improver</span></h1>
+  <p>Improve grammar, clarity and academic writing while keeping your original ideas and meaning.</p>
+</header>
+
+<main>
+  <section class="card">
+    <h2>✍️ Enter Your Essay</h2>
+    <label for="essay">Your original essay</label>
+    <textarea id="essay" maxlength="20000" placeholder="Paste your essay here..."></textarea>
+    <div class="counter"><span id="inputWords">0</span> words · <span id="chars">0</span>/20,000 characters</div>
+
+    <div class="row">
+      <div>
+        <label for="level">Education level</label>
+        <select id="level">
+          <option value="General">General</option>
+          <option value="A/L student">A/L student</option>
+          <option value="Diploma">Diploma</option>
+          <option value="Undergraduate">Undergraduate</option>
+          <option value="Postgraduate">Postgraduate</option>
+        </select>
+      </div>
+      <div>
+        <label for="style">Writing style</label>
+        <select id="style">
+          <option value="Clear and natural">Clear and natural</option>
+          <option value="Academic and formal">Academic and formal</option>
+          <option value="Professional">Professional</option>
+          <option value="Simple English">Simple English</option>
+        </select>
+      </div>
+      <div>
+        <label for="task">Improvement mode</label>
+        <select id="task">
+          <option value="Full improvement">Full essay improvement</option>
+          <option value="Grammar and spelling only">Grammar and spelling only</option>
+          <option value="Clarity and flow">Clarity and flow</option>
+          <option value="Academic writing">Academic writing</option>
+        </select>
+      </div>
+      <div>
+        <label for="language">Output language</label>
+        <select id="language">
+          <option value="English">English</option>
+          <option value="Sinhala">Sinhala</option>
+          <option value="Tamil">Tamil</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="tools">
+      <button class="primary" id="improve">✨ Improve My Essay</button>
+      <button class="secondary" id="clear">Clear</button>
+    </div>
+    <div id="status" class="status" role="status" aria-live="polite"></div>
+    <p class="small">Tip: Paste your own writing. Review the improved version and verify any facts or references before submitting it.</p>
+  </section>
+
+  <section class="card">
+    <h2>✅ Improved Essay</h2>
+    <div id="result" class="result" aria-live="polite"></div>
+    <div class="counter"><span id="outputWords">0</span> words</div>
+    <div class="tools">
+      <button class="secondary" id="copy">📋 Copy Result</button>
+      <button class="secondary" id="download">⬇ Download TXT</button>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>How to use the AI Essay Improver</h2>
+    <ol>
+      <li>Paste your essay into the text box.</li>
+      <li>Choose your education level, writing style and improvement mode.</li>
+      <li>Click <b>Improve My Essay</b> and wait for the result.</li>
+      <li>Review the changes, then copy or download your improved essay.</li>
+    </ol>
+    <p class="small">AI can make mistakes. Always check the final text and follow your school's or university's AI-use rules.</p>
+  </section>
+</main>
+
+<footer>© Free Tools Zone · Free online student tools</footer>
+
+<script>
+const API_URL = "https://ftz-ai-api.snxbro1.workers.dev/";
+
+const $ = id => document.getElementById(id);
+const essay = $("essay");
+const result = $("result");
+const statusBox = $("status");
+const improveBtn = $("improve");
+
+function wordCount(text) {
+  const trimmed = text.trim();
+  return trimmed ? trimmed.split(/\s+/).length : 0;
+}
+
+function updateCounts() {
+  $("inputWords").textContent = wordCount(essay.value);
+  $("chars").textContent = essay.value.length;
+  $("outputWords").textContent = wordCount(result.textContent);
+}
+essay.addEventListener("input", updateCounts);
+
+function showStatus(message, type = "") {
+  statusBox.textContent = message;
+  statusBox.className = "status" + (type ? " " + type : "");
+  statusBox.style.display = "block";
+}
+
+improveBtn.addEventListener("click", async () => {
+  const originalEssay = essay.value.trim();
+
+  if (!originalEssay) {
+    showStatus("Please paste your essay first.", "error");
+    essay.focus();
+    return;
+  }
+  if (originalEssay.length < 30) {
+    showStatus("Please enter a little more text so the AI can improve it.", "error");
+    return;
+  }
+
+  improveBtn.disabled = true;
+  improveBtn.textContent = "⏳ Improving...";
+  showStatus("Improving your essay. This may take a little time.");
+  result.textContent = "";
+
+  const mode = $("task").value;
+  const writingStyle = $("style").value;
+  const language = $("language").value;
+  const educationLevel = $("level").value;
+
+  // The Worker must support mode: "essay_improver".
+  try {
+    const response = await fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        mode: "essay_improver",
+        essay: originalEssay,
+        educationLevel,
+        tone: writingStyle,
+        language,
+        improvementMode: mode
+      })
+    });
+
+    let data;
+    try {
+      data = await response.json();
+    } catch {
+      throw new Error("The server returned an unreadable response. Please try again.");
+    }
+
+    if (!response.ok || !data.success) {
+      throw new Error(data.error || "Unable to improve the essay right now.");
+    }
+
+    // Accept the essay field used by the updated Worker, with assignment
+    // as a compatibility fallback for the existing backend response shape.
+    const improved = data.essay || data.assignment || data.text || "";
+    if (!improved.trim()) {
+      throw new Error("The AI returned an empty result. Please try again.");
+    }
+
+    result.textContent = improved.trim();
+    updateCounts();
+    showStatus("Essay improved successfully! Review it before using it.", "success");
+  } catch (error) {
+    showStatus(
+      error.message || "Connection failed. Check your internet and try again.",
+      "error"
+    );
+  } finally {
+    improveBtn.disabled = false;
+    improveBtn.textContent = "✨ Improve My Essay";
+  }
+});
+
+$("clear").addEventListener("click", () => {
+  essay.value = "";
+  result.textContent = "";
+  statusBox.style.display = "none";
+  updateCounts();
+});
+
+$("copy").addEventListener("click", async () => {
+  const text = result.textContent.trim();
+  if (!text) {
+    showStatus("There is no improved essay to copy yet.", "error");
+    return;
+  }
+  try {
+    await navigator.clipboard.writeText(text);
+    showStatus("Improved essay copied!", "success");
+  } catch {
+    showStatus("Copy failed. Please select the result and copy it manually.", "error");
+  }
+});
+
+$("download").addEventListener("click", () => {
+  const text = result.textContent.trim();
+  if (!text) {
+    showStatus("Improve an essay before downloading.", "error");
+    return;
+  }
+  const blob = new Blob([text], {type: "text/plain;charset=utf-8"});
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "improved-essay.txt";
+  link.click();
+  URL.revokeObjectURL(url);
+});
+updateCounts();
+</script>
+</body>
+</html>
